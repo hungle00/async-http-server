@@ -1,6 +1,7 @@
 require './simple_server'
 require './fiber_server'
 require './async_server'
+require './thread_server'
 
 app = Proc.new do
   sleep 1 # represent for time for waiting I/O 
@@ -8,5 +9,5 @@ app = Proc.new do
 end
 
 # SimpleServer.new(app).start
-FiberServer.new(app).start
+ThreadServer.new(app).start
 # AsyncServer.new(app).start
