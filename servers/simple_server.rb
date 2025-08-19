@@ -1,6 +1,6 @@
 require 'socket'
-require './http_utils/request_parser'
-require './http_utils/http_responder'
+require_relative '../http_utils/request_parser'
+require_relative '../http_utils/http_responder'
 
 class SimpleServer
   PORT = ENV.fetch('PORT', 4000)

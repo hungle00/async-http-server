@@ -3,3 +3,5 @@
 source "https://rubygems.org"
 
 gem "async", "~> 2.17"
+gem "async-http"
+gem "polyphony"

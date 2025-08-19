@@ -1,9 +1,9 @@
 require 'socket'
-require './helpers/thread_pool'
-require './http_utils/request_parser'
-require './http_utils/http_responder'
+require 'async/scheduler'
+require_relative '../http_utils/request_parser'
+require_relative '../http_utils/http_responder'
 
-class ThreadServer
+class FiberServer
   PORT = ENV.fetch('PORT', 4000)
   HOST = ENV.fetch('HOST', '127.0.0.1').freeze
   # number of incoming connections to keep in a buffer
@@ -16,15 +16,14 @@ class ThreadServer
   end
 
   def start
-    pool = ThreadPool.new(size: 5)
+    Fiber.set_scheduler(Async::Scheduler.new)
     socket = TCPServer.new(HOST, PORT)
     socket.listen(SOCKET_READ_BACKLOG)
 
-    loop do
-      conn = socket.accept # wait for a client to connect
-
-      pool.schedule do
-        begin
+    Fiber.schedule do
+      loop do
+        conn = socket.accept # wait for a client to connect
+        Fiber.schedule do
           request = RequestParser.call(conn)
           status, headers, body = app.call(request)
           puts status, headers
@@ -36,7 +35,5 @@ class ThreadServer
         end
       end
     end
-  ensure
-    pool&.shutdown
   end
 end
