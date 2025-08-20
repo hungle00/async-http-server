@@ -16,13 +16,14 @@ class SimpleServer
 
   def start
     socket = TCPServer.new(HOST, PORT)
+    puts "🚀 Simple Server starting on #{HOST}:#{PORT}"
     socket.listen(SOCKET_READ_BACKLOG)
 
     loop do
       conn = socket.accept # wait for a client to connect
       request = RequestParser.call(conn)
       status, headers, body = app.call(request)
-      puts status, headers
+      puts status, headers, body
       HttpResponder.call(conn, status, headers, body)
     rescue => e
       puts e.message

@@ -1,12 +1,24 @@
-# HTTP Server
+# Ruby Fiber Showcase
 
-Build a simple Ruby HTTP Server from scratch using Fibers and Async gem.  
+A comprehensive showcase of Ruby concurrency approaches using Fibers, Threads, and Async programming patterns.
 
-Based on https://github.com/TheRusskiy/ruby3-http-server  
+## 🚀 Features
+- **Multiple HTTP Servers**: Compare different concurrency models  
+- **Web Crawlers**: Demonstrate concurrent web scraping  
 
-About Async gem: https://socketry.github.io/async/index.html  
+## HTTP Servers
 
-## Benchmarking
+Different HTTP server implementations using various concurrency approaches:  
+
+• **Simple Server** - Synchronous processing, handles one request at a time  
+• **Thread Server** - Thread pool with 5 workers for concurrent requests   
+• **Fiber Server** - Ruby fibers with Async scheduler   
+• **Async Server** - Async gem with explicit async boundaries   
+• **Polyphony Server** - Polyphony gem with natural fiber-based syntax  
+
+Basic HTTP Server based on https://github.com/TheRusskiy/ruby3-http-server
+
+### Benchmarking
 You can use `wrk` to send requests
 ```
 wrk -t8 -c200 -d20s http://127.0.0.1:4000
@@ -53,3 +65,10 @@ Transfer/sec:     626.20B
 Requests/sec:    189.20
 Transfer/sec:     24.20KB
 ```
+
+## Web Crawlers
+Web crawling examples using different concurrency approaches:  
+
+• **AsyncCrawler** - Async gem with explicit async boundaries  
+• **PolyphonyCrawler** - Polyphony gem with natural fiber-based syntax  
+

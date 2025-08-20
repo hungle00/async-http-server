@@ -17,6 +17,7 @@ class AsyncServer
 
   def start
     socket = TCPServer.new(HOST, PORT)
+    puts "🚀 Async Server starting on #{HOST}:#{PORT}"
     socket.listen(SOCKET_READ_BACKLOG)
 
     Async do

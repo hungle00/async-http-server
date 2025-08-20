@@ -18,6 +18,7 @@ class FiberServer
   def start
     Fiber.set_scheduler(Async::Scheduler.new)
     socket = TCPServer.new(HOST, PORT)
+    puts "🚀 Fiber Server starting on #{HOST}:#{PORT}"
     socket.listen(SOCKET_READ_BACKLOG)
 
     Fiber.schedule do
@@ -26,7 +27,7 @@ class FiberServer
         Fiber.schedule do
           request = RequestParser.call(conn)
           status, headers, body = app.call(request)
-          puts status, headers
+          puts status, headers, body
           HttpResponder.call(conn, status, headers, body)
         rescue => e
           puts e.message

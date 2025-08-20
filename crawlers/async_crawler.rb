@@ -2,7 +2,7 @@ require "async"
 require "async/http/internet"
 require "async/semaphore"
 
-class WebCrawler
+class AsyncCrawler
   attr_reader :urls, :max_concurrent, :timeout, :results
 
   def initialize(urls: [], max_concurrent: 5, timeout: 3)
@@ -74,6 +74,6 @@ urls = [
   "https://forum.rubyonrails.pl/t/jak-zaczac-przygode-z-ruby-on-rails/18"
 ]
 
-crawler = WebCrawler.new(urls: urls, max_concurrent: 5, timeout: 3)
+crawler = AsyncCrawler.new(urls: urls, max_concurrent: 5, timeout: 3)
 crawler.crawl
 crawler.print_summary

@@ -17,6 +17,7 @@ class ThreadServer
   def start
     pool = ThreadPool.new(size: 5)
     socket = TCPServer.new(HOST, PORT)
+    puts "🚀 Thread Server starting on #{HOST}:#{PORT}"
     socket.listen(SOCKET_READ_BACKLOG)
 
     loop do
@@ -26,7 +27,7 @@ class ThreadServer
         begin
           request = RequestParser.call(conn)
           status, headers, body = app.call(request)
-          puts status, headers
+          puts status, headers, body
           HttpResponder.call(conn, status, headers, body)
         rescue => e
           puts e.message
